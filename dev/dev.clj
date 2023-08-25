@@ -61,13 +61,14 @@
 
 (defn normalize
   [str]
-  (clojure.string/lower-case (clojure.string/replace str #"[\W_]+" "")))
+  (str/lower-case (str/replace str #"[\W_]+" "")))
 
 (defn spdx-comparison
   [identifier full-name & {:keys [weight] :or {weight 0.9}}]
   (let [version      (re-find #"\d+" identifier)
         name-version (re-find #"\d+" full-name)
-        base-score   (jaro-winkler (normalize identifier) (normalize full-name))]
+        base-score   (jaro-winkler (normalize identifier)
+                                   (normalize full-name))]
     (if (and version name-version (= version name-version))
       base-score
       (* base-score weight))))
@@ -204,7 +205,7 @@
   (d/q '[:find (pull ?e [*])
          :where
          [?e :spdx/referenceCategory :spdx/referenceCategory_security]]
-       sbom-db))
+       (:db (:graph system))))
 
 (comment
   (d/q '[:find ?purl
@@ -212,7 +213,7 @@
          [?e :spdx/referenceCategory :spdx/referenceCategory_packageManager]
          [?e :spdx/referenceType [:rdfa/uri "http://spdx.org/rdf/references/purl"]]
          [?e :spdx/referenceLocator ?purl]]
-       sbom-db))
+       (:db (:graph system))))
 
 (def schema
   [{:db/cardinality :db.cardinality/one,
