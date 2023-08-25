@@ -49,9 +49,6 @@
   `(do (@user/reveal (do ~@body))
        true))
 
-(comment
-  (def boot-db (db/test-bootstrap (:db system))))
-
 ;; step 1: get an personal access token (PAT) for GitHub with public read-only permissions
 ;; step 2: use your PAT as an :oauth-token to fetch GitHub REST API SBOMs from public repositories
 ;; step 3: convert the SPDX JSON document to RDF using org.spdx/tools-java
