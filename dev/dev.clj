@@ -404,11 +404,11 @@
   (when unique
     (defmethod rdf/infer-datomic-unique ident [_] unique)))
 
-(defrecord SbomGraph [boot-db boms]
+(defrecord SbomGraph [init-db boms]
   com/Lifecycle
   (start [this]
     (let [ ;; bootstrap a database with a datomic schema inferred from loaded RDF models
-          boot-db    (db/test-bootstrap boot-db)
+          boot-db    (db/test-bootstrap init-db)
           ;; install the SPDX License data into the database
           license-db (reduce (fn [with-db tx-data]
                                (:db-after (d/with with-db {:tx-data tx-data})))

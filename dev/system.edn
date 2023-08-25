@@ -6,11 +6,11 @@
            :server-type  :datomic-local
            :storage-dir  :mem
            :system       "dev"}
- :boot-db {:sc/create-fn net.wikipunk.datomic/map->Connection
+ :init-db {:sc/create-fn net.wikipunk.datomic/map->Connection
            :sc/refs      [:client]
            :db-name      "spdx-examples"}
  :graph   {:sc/create-fn dev/map->SbomGraph
-           :sc/refs      [:boot-db :vocab]
+           :sc/refs      [:init-db :vocab]
            :boms         [["clojure" "clojure"]
                           ["clojure" "clojurescript"]
                           ["aamedina" "rdf"]
