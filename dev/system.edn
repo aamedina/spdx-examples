@@ -1,0 +1,21 @@
+{:vocab  {:sc/create-fn net.wikipunk.rdf/map->UniversalTranslator
+          :sc/refs      [:ssvc]
+          :config       {}}
+ :ssvc   {:sc/create-fn net.wikipunk.ssvc/map->SSVC}
+ :client {:sc/create-fn datomic.client.api/client
+          :server-type  :datomic-local
+          :storage-path :mem
+          :system       "dev"}
+ :graph  {:sc/create-fn dev/map->SbomGraph
+          :sc/refs      [:client :vocab]
+          :boms         [["clojure" "clojure"]
+                         ["clojure" "clojurescript"]
+                         ["aamedina" "rdf"]
+                         ["nodejs" "node"]
+                         ["godotengine" "godot"]
+                         ["pytorch" "pytorch"]
+                         ["microsoft" "TypeScript"]
+                         ["huggingface" "transformers"]
+                         ["microsoft" "vscode"]
+                         ["pypa" "pip"]
+                         {:dcat/downloadURL "https://github.com/spdx/spdx-spec/raw/development/v2.3.1/examples/SPDXRdfExample-v2.3.spdx.rdf.xml"}]}}
